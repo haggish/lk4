@@ -1,0 +1,73 @@
+ ---
+  Implementation Plan
+
+  Visual Design (from lk2 source)
+
+  - Background: white, max-width 730px centered
+  - Header: fixed, 70px, border-bottom: 1px solid #e5e5e5, h1 "laura kärki" + subtitle
+  - Footer: fixed, 80px, border-top: 1px solid #e5e5e5, language toggle left / social links + email right
+  - Accent color: pink — links, active nav pill background
+  - Nav: Bootstrap nav-pills, active tab = pink, centered on mobile
+  - Fade gradients: 20px fade-in below header, fade-out above footer
+  - Carousel: 70vh height, object-fit: contain
+
+  File Structure
+
+  src/app/
+    core/
+      header/header.ts          # Fixed header with nav-pills
+      footer/footer.ts          # Language toggle, social links, email
+      layout/layout.ts          # Shell with router-outlet
+    features/
+      landing/landing.ts        # Dog photo + 5 news items
+      intro/intro.ts            # Bio with floating image
+      cv/
+        cv.ts                   # Sections/subsections
+        time-range.pipe.ts      # Port of timeFor() logic
+      works/works.ts            # ng-bootstrap carousel
+      archive/archive.ts        # ng-bootstrap carousel
+      other/other.ts            # Poems, PDF links, video
+    shared/
+      services/
+        language.service.ts     # signal<'fi'|'en'>, localStorage
+      data/
+        translations.ts         # Full bilingual content (typed)
+      pipes/
+        safe-html.pipe.ts       # DomSanitizer for HTML in news/archive
+      models/content.model.ts
+  public/
+    images/1.jpg…30.jpg, eka.jpg, a_dog_enjoys_the_fresh_air.jpg
+    archive/1.jpg…33.jpg
+    resources/*.pdf
+
+  Key Technical Decisions
+
+  ┌─────────────────────────────────────────────────┬─────────────────────────────────────────────────────────────────────────────────────┐
+  │                     Concern                     │                                      Approach                                       │
+  ├─────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+  │ Language                                        │ LanguageService with signal<'fi'|'en'>, persisted in localStorage                   │
+  ├─────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+  │ Content                                         │ Typed translations.ts object (ported from translations.js), accessed via computed() │
+  ├─────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+  │ CV time formatting                              │ TimeRangePipe — port of timeFor() from cv.js controller                             │
+  ├─────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+  │ HTML content (news links, archive descriptions) │ SafeHtmlPipe wrapping DomSanitizer                                                  │
+  ├─────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+  │ Carousel                                        │ NgbCarousel from ng-bootstrap                                                       │
+  ├─────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+  │ Images                                          │ Copied from lk2 GitHub to public/                                                   │
+  ├─────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+  │ Routing                                         │ Lazy-loaded feature routes, default /new                                            │
+  └─────────────────────────────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
+
+  Build Phases
+
+  1. Foundation — content data model + translations.ts + LanguageService
+  2. Shell — routing, LayoutComponent, HeaderComponent, FooterComponent
+  3. Landing page — news items with HTML links
+  4. Intro page — bio with floating image
+  5. CV page — TimeRangePipe + section/subsection layout
+  6. Works + Archive — NgbCarousel with captions
+  7. Other page — static content with PDF/video links
+  8. Assets — download images from lk2 repo to public/
+  9. Accessibility pass — WCAG AA, focus management, ARIA

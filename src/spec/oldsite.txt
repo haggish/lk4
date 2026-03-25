@@ -1,0 +1,501 @@
+
+       1. OVERALL FILE/FOLDER STRUCTURE
+
+       The repository is a Yeoman-generated AngularJS single-page application (SPA) from circa 2013-2014. Structure:
+
+       lk2/
+       ├── .idea/                 (IDE configuration)
+       ├── app/                   (Application source)
+       │   ├── index.html         (Main entry point)
+       │   ├── favicon.ico
+       │   ├── 404.html
+       │   ├── robots.txt
+       │   ├── .htaccess          (Server configuration)
+       │   ├── images/            (43 portfolio/asset images)
+       │   ├── archive/           (33 past work images)
+       │   ├── resources/         (2 PDF files)
+       │   ├── styles/            (CSS/SCSS)
+       │   ├── scripts/           (AngularJS application)
+       │   └── views/             (Template files)
+       ├── test/                  (Test files)
+       ├── Gruntfile.js           (Build automation)
+       ├── package.json           (Node dependencies)
+       ├── bower.json             (Frontend dependencies)
+       ├── karma*.conf.js         (Test runner config)
+       └── [Build config files]   (.bowerrc, .travis.yml, etc.)
+
+       Tech Stack: AngularJS 1.2.15, Bootstrap 3.1, jQuery 1.11, Angular Translate for i18n
+
+       ---
+       2. CSS/STYLING DETAILS
+
+       Main Stylesheet Files:
+
+       - main.scss (4,962 bytes) - SCSS source
+       - main.css (4,778 bytes) - Compiled CSS
+
+       Color Scheme:
+
+       - Primary Accent: Pink (used for links and active navigation pills)
+       - Text: Dark gray (#777) for footer text
+       - Backgrounds: White panels for visual separation
+       - Compatibility Message: Black text on light gray (#ccc)
+
+       Typography & Spacing:
+
+       - Header: 70px height (adjusts to 81px on tablets, 84px on small screens)
+       - Footer: 80px height (64px on tablets, adjusts based on viewport)
+       - Body Padding: 20px top/bottom
+       - Content Padding: 70px top, 80px bottom (mobile adjusted)
+       - Header Heading Line-height: 40px
+       - Bootstrap 3.1 provides base typography
+
+       Layout System:
+
+       - Fixed Positioning: Header, footer, and marketing sections fixed with z-index layering
+       - Fade Transitions: 20px fade-in gradient below header, 20px fade-out gradient above footer
+       - Carousel Height: 70vh with object-fit: contain for responsive images
+       - Carousel Captions: 10% margins from left/right edges; position static on screens 950px+ height
+
+       Responsive Breakpoints (Media Queries):
+
+       - 768px and below: Adjusted header/footer heights, centered navigation, single-line nav items
+       - 767px and below: Footer reduced to 64px, modified spacing
+       - 580px and below: Further footer adjustments (84px height)
+       - 950px+ height: Carousel captions repositioned
+
+       Frameworks Used:
+
+       - Bootstrap Sass Official 3.1.0
+       - Compass (for mixins and utilities)
+       - Autoprefixer (CSS vendor prefixes)
+
+       ---
+       3. HTML TEMPLATES & PAGE STRUCTURE
+
+       Main Index File: app/index.html
+
+       Header Section:
+       <h1>laura kärki</h1>
+       [Profession subtitle]
+       [Dynamic navigation tabs via ng-repeat]
+
+       Navigation Structure:
+       - Dynamically generated tabs using Angular ng-repeat
+       - Tab list: Bootstrap nav-pills styling
+       - Routes use pattern: #/{{tab.toLowerCase()}}/{{locale()}}
+       - Language-aware routing
+
+       Main Content Area:
+       <div class="content" ng-view=""></div>
+       - Uses AngularJS routing to load templates dynamically
+       - Fade-in/fadeout visual transitions
+
+       Footer Content:
+       - Language toggle button
+       - Social media links:
+         - Instagram
+         - Blog
+         - Facebook
+       - Professional directory links:
+         - Finnish Artists Association
+         - Finnish Designers
+       - Email contact information (formatted as "laura dot karki at gmail dot com")
+
+       Technical Stack:
+       - AngularJS with ng-route
+       - Bootstrap responsive grid
+       - jQuery
+       - Angular Translate for i18n
+       - UI Bootstrap components
+       - Google Analytics (template included but unconfigured)
+
+       View Template Files:
+
+       1. intro_en.html - English biography/introduction
+         - Location: /app/views/intro_en.html (6,886 bytes)
+       2. intro_fi.html - Finnish biography/introduction
+         - Location: /app/views/intro_fi.html (8,483 bytes)
+       3. cv.html - CV display template
+         - Location: /app/views/cv.html (1,489 bytes)
+         - Uses template variables: {{CV.section}}, {{CV.{{section}}.VALUES.{{$index}}.DESC}}
+         - Responsive Bootstrap grid layout
+       4. news.html - News/upcoming exhibitions section
+         - Location: /app/views/news.html (556 bytes)
+         - Template references translation keys
+       5. works.html - Portfolio carousel
+         - Location: /app/views/works.html (402 bytes)
+         - Bootstrap carousel component
+         - Images: Images/{{$index + 1}}.jpg
+       6. archive.html - Past works carousel
+         - Location: /app/views/archive.html (403 bytes)
+         - Bootstrap carousel with sequential image numbering
+         - Images: archive/{{$index + 1}}.jpg
+       7. other_en.html - English "other" page
+         - Location: /app/views/other_en.html (1,785 bytes)
+       8. other_fi.html - Finnish "other" page
+         - Location: /app/views/other_fi.html (1,701 bytes)
+
+       ---
+       4. COMPLETE PAGE CONTENT
+
+       Navigation Structure:
+
+       Main tabs: NEW, INTRO, CV, WORKS, ARCHIVE, OTHER, CONTACT
+
+       Introduction/Biography Content:
+
+       English Version:
+       Laura Kärki (born 1978) is a Finnish visual artist based in Germany, Finland, and international residencies. She holds an M.A. from Aalto University School
+       of Art and Design Helsinki (2006), plus credentials in textile design and ceramics craftsmanship.
+
+       Her artistic practice spans poems, installations, sculpture, and sound work. Key themes: alienation and being an outsider, contemporary social issues
+       (loneliness, neglected relationships, empathy deficits).
+
+       Artistic Identity: Visual artist, poet, sound designer who makes her creative processes visible in finished pieces. Develops work slowly over extended
+       periods combining poems, sculptures, and soundscapes. Draws inspiration from everyday life and unconventional materials.
+
+       Recent Focus: Sound installations incorporating domestic elements; exploration of how contemporary urgency affects people's living environments. Works
+       between Berlin, Lahti, and Helsinki.
+
+       Exhibition Venues: Circulo de Bellas Artes (Madrid), Mänttä Art Festival, Finnish State Art Collections
+
+       Critical Introduction: By Veikko Halmetoja (2011) - Characterizes Kärki as versatile practitioner prioritizing content over aesthetics; develops form after
+       establishing material choices. Technical proficiency in ceramics and textiles while addressing themes of alienation and social disconnection.
+
+       Finnish Version:
+       Describes Kärki as "visual artist known for working across diverse materials and techniques without prejudice." Recent 2020 works explore family
+       relationships and Finnish identity abroad through oil pastels, textile prints, ceramics, and photography. Also writes poetry and adds soundscapes.
+
+       Has lived in Berlin for past decade; addresses personal themes with broader resonance reflecting Finnish identity. Artistic practice metaphor: "walking a
+       tightrope—I never fall down - that makes my work brave."
+
+       Education: Master's degree from Aalto University (2006)
+
+       Collections:
+       - Aineeen Art Museum
+       - Lahti Art Museum
+       - Finland's State Art Collection (including sound installation)
+       - Private collections
+       - Public works at: Finnish Convention Center, Hotel Hilton (Hakaniemi, Helsinki), Borenius & Kemppi law firm
+
+       Gallery Representation: Gallery Halmetoja (led by Veikko Halmetoja, Finland)
+
+       Recent Exhibitions:
+       - "Punnittu esitys" at Gallery Halmetoja (January 2019)
+       - "Family Affairs" with Niina Lehtonen-Braun, Kulturhaus Karlshorst, Berlin (January 2021)
+       - Curator: Dr. Sylvia Metz
+       - Support: Finnish-German Institute
+
+       Work in Korea: 2020
+
+       ---
+       5. CV ENTRIES (FROM TRANSLATIONS)
+
+       CV Sections:
+       - EDUCATION
+       - ARTISTIC_ACTIVITY
+       - JOB_EXPERIENCE
+
+       Artistic Activity Subsections:
+       - SELECT_PRIVATE_EXHIBITIONS
+       - GROUP_EXHIBITIONS
+       - POEM_PERFORMANCES
+       - WORKS_IN_COLLECTIONS
+       - COMMISSIONED_WORKS_PUBLIC_ART
+       - GRANTS
+       - PRIZES
+       - MEMBERSHIPS
+       - RESIDENCES
+       - OTHER
+
+       CV Highlights:
+       - Education: M.A. from UIAH (Aalto), textile design background, ceramics training
+       - 70+ group exhibitions across Finland, Germany, Estonia, Spain, Korea
+       - 20+ solo exhibitions
+       - Residencies: Florence, Berlin, Oaxaca, Marbella, Kochi, Greece
+       - Teaching: Art education, workshops across Finland and Germany
+       - Collections: Finnish State Art, multiple museums, private collections
+       - Artistic media: Tufted textiles, oil pastels, ceramics, textile prints, mixed media, installations, sound art
+       - Notable venues: Gallery Halmetoja, Verein Berliner Künstler, GEDOK Galerie, Nordic museums, German museums
+
+       ---
+       6. FOOTER CONTENT
+
+       Footer Elements:
+       1. Language Toggle: Button to switch between English (EN) and Finnish (FI)
+       2. Social Media Links:
+         - Instagram (icon/link)
+         - Blog (icon/link)
+         - Facebook (icon/link)
+       3. Professional Directories:
+         - Finnish Artists Association
+         - Finnish Designers registry
+       4. Contact Method: Email contact information (displayed as "laura dot karki at gmail dot com" for spam prevention)
+       5. Footer Height: 80px desktop, 64px tablets, 84px small screens (responsive)
+
+       Language Switching:
+       - Stored in browser cookies: com.laurakarki.preferredLanguage
+       - Managed via Angular Translate service
+       - Routes rebuild on language change (e.g., /intro/en → /intro/fi)
+
+       ---
+       7. NAVIGATION STRUCTURE & ROUTING
+
+       AngularJS Routing Configuration:
+
+       ┌────────────────────┬──────────────────────┬────────────┐
+       │   Route Pattern    │       Template       │ Controller │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ /new/:whatever     │ news.html            │ News       │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ /intro/en          │ intro_en.html        │ Container  │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ /intro/fi          │ intro_fi.html        │ Container  │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ /cv/:whatever      │ cv.html              │ CV         │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ /works/:whatever   │ works.html           │ Works      │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ /archive/:whatever │ archive.html         │ Archive    │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ /other/en          │ other_en.html        │ Container  │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ /other/fi          │ other_fi.html        │ Container  │
+       ├────────────────────┼──────────────────────┼────────────┤
+       │ Default            │ redirects to /new/en │ -          │
+       └────────────────────┴──────────────────────┴────────────┘
+
+       Tab Management:
+       - 6 main tabs: NEW, INTRO, CV, WORKS, ARCHIVE, OTHER
+       - Tab selection determined by URL path
+       - Locale-dependent paths: /intro/ and /other/ reconstruct on language change
+       - Tab highlighting via comparison with selectedTab from scope
+
+       Controllers:
+       1. Container - Manages tab navigation and language switching
+       2. News - Handles upcoming exhibitions section
+       3. CV - Manages CV display with date formatting by granularity
+       4. Works - Fetches portfolio data and translates work descriptions
+       5. Archive - Fetches archive work data and translations
+
+       ---
+       8. IMAGES & ASSETS
+
+       Images Directory (/app/images/):
+
+       - 43 total image files
+       - Numbered images: 1.jpg through 30.jpg (portfolio works)
+       - Named images:
+         - Visiting_Artists_2024_POSTER.jpg (856.8 KB - largest)
+         - a_dog_enjoys_the_fresh_air.jpg
+         - ap.jpg, bmb.jpg, eka.jpg
+         - lkava.jpg
+         - suomiasema.jpg
+         - whoiam.jpg
+         - yeoman.png (13.5 KB - smallest)
+       - Size range: 13.5 KB to 856.8 KB
+
+       Archive Directory (/app/archive/):
+
+       - 33 numbered image files: 1.jpg through 33.jpg
+       - Size variation: 29 KB to 477 KB
+         - Smaller: files 1-21 (under 120 KB)
+         - Larger: files 22-30 (180-477 KB)
+         - Return to smaller: files 31-33 (under 100 KB)
+       - Used for past works carousel
+
+       Resources (/app/resources/):
+
+       1. hiiliperhonen.pdf (141 KB)
+         - Laura's poetry collection: "Hiiliperhonen on nimesi, kaipaat kiinnitettä siipiisi"
+         - Examines dialogue between internal and external worlds
+         - Themes: dreams, domestic life, artistic creation
+         - Artist seeking translation funding for English and German versions
+       2. laura_karki_a_measured_presentation.pdf (9.5 MB)
+         - Exhibition catalog for "A Measured Presentation" show
+
+       Other Asset Reference:
+
+       - favicon.ico (15,406 bytes) - Site icon
+
+       ---
+       9. "OTHER" PAGE CONTENT
+
+       English Version (other_en.html):
+
+       - Information about Laura Kärki's poems and exhibitions
+       - Poem collection details
+       - Video interview reference
+       - Site programming credits to Mika Salminen (2014)
+
+       Finnish Version (other_fi.html):
+
+       - Poetry Collection: "Hiiliperhonen on nimesi, kaipaat kiinnitettä siipiisi"
+         - Represents "a long process" examining dialogue between internal and external worlds
+         - Explores themes of dreams, domestic life, and artistic creation
+         - Features contrasting imagery of vulnerable skin and hard shells
+         - Seeking translation funding for English and German versions
+       - Exhibition Materials: PDF catalog available for "A Measured Presentation" exhibition
+       - Media: Interview video "Suomalainen Saksassa: Laura Kärki, kuvataiteilija" (A Finn in Germany: Laura Kärki, Visual Artist) produced by Finnish Embassy in
+       Germany, accessible via Facebook
+       - Credits: Website programming by Mika Salminen (2014)
+
+       ---
+       10. TRANSLATIONS/CONTENT DATA
+
+       File: /app/scripts/translations.js (70,392 bytes)
+
+       Contains complete bilingual (Finnish/English) content object: com_laurakarki_translations
+
+       Language Keys: 'fi' (Finnish) and 'en' (English)
+
+       Main Translation Sections:
+       - CONTAINER: Professional identity, tab labels, footer links, language toggle
+       - NEW: Upcoming exhibitions and news items (5 upcoming events documented)
+       - WORKS: Portfolio pieces with descriptions (30+ works catalogued)
+       - ARCHIVE: Past works with descriptions (33+ archived pieces)
+       - CV: Complete career documentation including education, exhibitions, residencies, teaching
+       - INTRO: Biography sections (EN and FI versions)
+       - OTHER: Additional content including poem collection and exhibition info
+
+       Professional Identity Translation:
+       - English: "visual artist"
+       - Finnish: "kuvataiteilija"
+
+       ---
+       11. CONTROLLERS OVERVIEW
+
+       Container Controller (/app/scripts/controllers/container.js):
+       - Manages tab navigation and language switching
+       - Initializes with 6 tabs: NEW, INTRO, CV, WORKS, ARCHIVE, OTHER
+       - Language toggle: switches between English/Finnish via changeLanguage()
+       - Stores preference in $cookieStore under key com.laurakarki.preferredLanguage
+       - Locale-aware routing (reconstructs paths like /intro/en → /intro/fi)
+       - Listens to location changes to update selected tab
+
+       News Controller (/app/scripts/controllers/news.js):
+       - Simple controller with placeholder awesomeThings array
+       - Injects: $scope, $translate, $cookieStore
+
+       CV Controller (/app/scripts/controllers/cv.js):
+       - Manages CV sections: EDUCATION, ARTISTIC_ACTIVITY, JOB_EXPERIENCE
+       - Defines subsections for ARTISTIC_ACTIVITY
+       - Key Feature: timeFor() function formats dates by granularity:
+         - 'year': Year ranges (e.g., "2020-2022")
+         - 'month': Month/year with ranges (e.g., "3/2020-6/2022")
+         - 'day': Full dates (e.g., "15.3.2020")
+         - Handles "continuing" flag for ongoing activities
+       - Initializes with Finnish translations
+
+       Works Controller (/app/scripts/controllers/works.js):
+       - Initializes empty works array, fetches data
+       - Fetches work names and descriptions from translations
+       - Listens for $translateChangeEnd to refresh on language switch
+       - Dynamic translation resolution via $translate service
+       - Distinguishes between initial population (push) and updates (modify)
+
+       Archive Controller (/app/scripts/controllers/archive.js):
+       - Mirrors Works controller functionality
+       - Fetches archive works data from translations
+       - Handles language change events
+       - Asynchronous promise resolution for translations
+
+       ---
+       12. DIRECTIVES
+
+       File: /app/scripts/directives.js (409 bytes)
+
+       Single Directive - lkTab:
+       - Type: Element (E)
+       - Scope: Accepts name attribute (string binding)
+       - Template: List item with Bootstrap nav-pills styling
+       - Features:
+         - Displays name in uppercase
+         - Links to route based on name parameter
+         - Active class applied when tab name matches selectedTab
+         - Translation support via $translate service
+         - Replace: true (replaces directive element with template)
+
+       ---
+       13. BUILD & DEVELOPMENT SETUP
+
+       Grunt Tasks Configured:
+
+       ┌─────────┬────────────────────────────────────────────────────────────────────┐
+       │  Task   │                              Purpose                               │
+       ├─────────┼────────────────────────────────────────────────────────────────────┤
+       │ serve   │ Development server with live reload (watch, autoprefixer, connect) │
+       ├─────────┼────────────────────────────────────────────────────────────────────┤
+       │ test    │ Karma test execution                                               │
+       ├─────────┼────────────────────────────────────────────────────────────────────┤
+       │ build   │ Production build: clean, concat, minify, rev assets                │
+       ├─────────┼────────────────────────────────────────────────────────────────────┤
+       │ default │ Lint, test, build sequence                                         │
+       └─────────┴────────────────────────────────────────────────────────────────────┘
+
+       Grunt Plugins:
+       - concurrent - Parallel task execution
+       - autoprefixer - CSS vendor prefixes
+       - compass - Sass compilation
+       - watch - File change monitoring
+       - jshint - Code quality
+       - imagemin/svgmin - Asset optimization
+       - usemin - Smart asset concatenation
+       - ngmin - Angular-safe minification
+       - connect - Development server
+       - bowerInstall - Dependency injection
+
+       Dependencies:
+       - Angular 1.2.15
+       - Bootstrap Sass 3.1.0
+       - jQuery 1.11.0
+       - Angular Translate 2.2.0
+       - Angular Bootstrap 0.11.0
+       - ES5 shims and polyfills
+
+       ---
+       14. KEY FILES PATHS (ABSOLUTE)
+
+       Core Application Files:
+       - /app/index.html - Main entry point
+       - /app/styles/main.scss - Styling source
+       - /app/styles/main.css - Compiled styles
+       - /app/scripts/app.js - App configuration & routing
+       - /app/scripts/translations.js - All i18n content
+       - /app/scripts/directives.js - Tab directive
+
+       Controllers:
+       - /app/scripts/controllers/container.js
+       - /app/scripts/controllers/news.js
+       - /app/scripts/controllers/cv.js
+       - /app/scripts/controllers/works.js
+       - /app/scripts/controllers/archive.js
+
+       Templates:
+       - /app/views/intro_en.html
+       - /app/views/intro_fi.html
+       - /app/views/cv.html
+       - /app/views/news.html
+       - /app/views/works.html
+       - /app/views/archive.html
+       - /app/views/other_en.html
+       - /app/views/other_fi.html
+
+       Assets:
+       - /app/images/ (43 images)
+       - /app/archive/ (33 images)
+       - /app/resources/hiiliperhonen.pdf
+       - /app/resources/laura_karki_a_measured_presentation.pdf
+
+       Configuration:
+       - /package.json
+       - /bower.json
+       - /Gruntfile.js
+       - /karma.conf.js
+       - /karma-e2e.conf.js
+
+       ---
+       This completes the comprehensive exploration of the Laura Kärki portfolio website (lk2 repository). The site is a well-structured AngularJS SPA from
+       2013-2014 showcasing a Finnish visual artist's work with bilingual support, responsive design, and comprehensive CV/portfolio management through a
+       translation-based content system.

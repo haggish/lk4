@@ -1,1 +1,296 @@
-/* You can add global styles to this file, and also import other style files */
+/* ─── Base ──────────────────────────────────────────────────────────────────── */
+
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+/* ─── Container ─────────────────────────────────────────────────────────────── */
+
+.lk-container {
+  max-width: 730px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0 auto;
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────────── */
+
+.lk-header {
+  position: fixed;
+  width: 100%;
+  max-width: 730px;
+  z-index: 2;
+  border-bottom: 1px solid #e5e5e5;
+  background: white;
+}
+
+.lk-title {
+  font-size: 1.5rem;
+  line-height: 40px;
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+.lk-title small {
+  font-size: 0.875rem;
+  margin-left: 0.4rem;
+}
+
+.lk-navtabs {
+  flex-wrap: wrap;
+}
+
+.header-back {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 730px;
+  height: 70px;
+  background: white;
+  z-index: 1;
+}
+
+/* ─── Footer ────────────────────────────────────────────────────────────────── */
+
+.lk-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 730px;
+  z-index: 2;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 19px;
+  color: #777;
+  background: white;
+}
+
+.footer-back {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 730px;
+  height: 80px;
+  background: white;
+  z-index: 1;
+}
+
+.footer-links {
+  text-align: right;
+  padding-right: 0;
+  margin-bottom: 0;
+}
+
+.lk-lang-btn {
+  padding: 0;
+  border: none;
+  color: pink;
+}
+
+.lk-lang-btn:hover {
+  color: hotpink;
+}
+
+/* ─── Fade gradients ─────────────────────────────────────────────────────────── */
+
+.fadein {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 730px;
+  height: 20px;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+
+.fadeout {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 730px;
+  height: 20px;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+
+/* ─── Content area ───────────────────────────────────────────────────────────── */
+
+.content {
+  padding-top: 70px;
+  padding-bottom: 80px;
+}
+
+.scrolled-content {
+  padding-bottom: 100px;
+}
+
+/* ─── Links & nav accents ────────────────────────────────────────────────────── */
+
+a {
+  color: pink;
+}
+
+a:hover {
+  color: hotpink;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .nav-link.active:hover,
+.nav-pills .nav-link.active:focus {
+  background-color: pink;
+  color: white;
+}
+
+.nav-pills .nav-link {
+  color: pink;
+}
+
+.nav-pills .nav-link:hover {
+  color: hotpink;
+}
+
+/* ─── Carousel ───────────────────────────────────────────────────────────────── */
+
+ngb-carousel {
+  display: block;
+}
+
+.carousel-caption {
+  left: 10%;
+  right: 10%;
+  color: white;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background-image: none;
+}
+
+@media screen and (min-height: 950px) {
+  .carousel-caption {
+    color: black;
+    position: static;
+    text-align: left;
+    padding: 1rem 0;
+  }
+}
+
+/* ─── Bio image ──────────────────────────────────────────────────────────────── */
+
+.bio-photo-wrapper {
+  float: right;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  display: block;
+  position: relative;
+  width: 200px;
+  height: 267px;
+}
+
+.bio-img {
+  width: 200px;
+  height: 267px;
+  object-fit: cover;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+
+@media screen and (max-width: 768px) {
+  .header-back,
+  .fadein {
+    height: 81px;
+  }
+
+  .fadein {
+    top: 81px;
+  }
+
+  .content {
+    padding-top: 81px;
+  }
+
+  .lk-navtabs {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .lk-title {
+    text-align: center;
+  }
+
+  .nav-pills .nav-item {
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  h1 {
+    margin-bottom: 0;
+  }
+
+  body {
+    padding-top: 2px;
+  }
+
+  .footer-back {
+    height: 64px;
+  }
+
+  .lk-footer {
+    padding-top: 0;
+  }
+
+  .content {
+    padding-bottom: 64px;
+  }
+
+  .fadeout {
+    bottom: 64px;
+  }
+
+  .scrolled-content {
+    padding-bottom: 125px;
+  }
+
+  .carousel-indicators {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .footer-back {
+    height: 84px;
+  }
+
+  .content {
+    padding-bottom: 84px;
+  }
+
+  .fadeout {
+    bottom: 84px;
+  }
+
+  .scrolled-content {
+    padding-bottom: 96px;
+  }
+
+  .bio-photo-wrapper {
+    float: none;
+    margin: 0 auto 1rem;
+    display: block;
+  }
+}
