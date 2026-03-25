@@ -71,3 +71,31 @@
   7. Other page — static content with PDF/video links
   8. Assets — download images from lk2 repo to public/
   9. Accessibility pass — WCAG AA, focus management, ARIA
+
+  Dockerfile — two stages: node:22-alpine builds the app, nginx:alpine serves it. Final image is ~25 MB.
+
+  nginx.conf — key details:
+  - try_files for SPA routing
+  - Hashed JS/CSS assets (.[hash].js) cached 1 year with immutable
+  - Images/fonts/PDFs cached 7 days
+  - index.html never cached (no hash on it, so must revalidate on deploy)
+  - Gzip on all text types
+
+  .dockerignore — excludes node_modules, dist, .git, spec files
+
+  compose.yml — minimal, port 8080:80, restart: unless-stopped for production use
+
+  Usage:
+  # Build and start
+  docker compose up -d --build
+
+  # Rebuild after code changes
+  docker compose up -d --build
+
+  # Logs
+  docker compose logs -f lk4
+
+  # Stop
+  docker compose down
+
+  The image is self-contained — the Angular build runs inside the container so you only need Docker on the target machine, not Node.

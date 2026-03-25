@@ -1,0 +1,8 @@
+services:
+  lk4:
+    build: .
+    image: lk4:latest
+    container_name: lk4
+    restart: unless-stopped
+    ports:
+      - "8080:80"
