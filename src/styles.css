@@ -1,6 +1,10 @@
 /* ─── Base ──────────────────────────────────────────────────────────────────── */
 
 body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333333;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -30,14 +34,16 @@ h1 {
 }
 
 .lk-title {
-  font-size: 1.5rem;
+  font-size: 36px;
   line-height: 40px;
   margin-bottom: 0;
   white-space: nowrap;
+  color: #777;
 }
 
 .lk-title small {
-  font-size: 0.875rem;
+  font-size: 0.65em;
+  color: #999;
   margin-left: 0.4rem;
 }
 
@@ -141,26 +147,27 @@ h1 {
 /* ─── Links & nav accents ────────────────────────────────────────────────────── */
 
 a {
-  color: pink;
+  color: #428bca;
 }
 
 a:hover {
-  color: hotpink;
+  color: #2a6496;
+  text-decoration: underline;
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .nav-link.active:hover,
 .nav-pills .nav-link.active:focus {
-  background-color: pink;
+  background-color: #428bca;
   color: white;
 }
 
 .nav-pills .nav-link {
-  color: pink;
+  color: #428bca;
 }
 
 .nav-pills .nav-link:hover {
-  color: hotpink;
+  color: #2a6496;
 }
 
 /* ─── Carousel ───────────────────────────────────────────────────────────────── */

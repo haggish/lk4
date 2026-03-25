@@ -10,15 +10,14 @@ import { NEWS } from '../../shared/data/translations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="scrolled-content">
-      <div class="news-photo-wrapper">
-        <img
-          ngSrc="/images/a_dog_enjoys_the_fresh_air.jpg"
-          fill
-          alt="A dog enjoys the fresh air"
-          class="news-photo"
-          priority
-        />
-      </div>
+      <img
+        ngSrc="/images/a_dog_enjoys_the_fresh_air.jpg"
+        width="873"
+        height="845"
+        alt="A dog enjoys the fresh air"
+        class="news-photo"
+        priority
+      />
 
       @for (item of newsItems(); track item.titleHtml) {
         <h4 [innerHTML]="item.titleHtml | safeHtml"></h4>
@@ -27,15 +26,11 @@ import { NEWS } from '../../shared/data/translations';
     </div>
   `,
   styles: [`
-    .news-photo-wrapper {
-      position: relative;
-      width: 100%;
-      height: 300px;
-      margin-bottom: 1rem;
-    }
     .news-photo {
-      object-fit: contain;
-      object-position: left;
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
     }
   `],
 })
