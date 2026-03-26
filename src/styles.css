@@ -48,7 +48,9 @@ h1 {
 }
 
 .lk-navtabs {
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .header-back {
@@ -185,6 +187,7 @@ ngb-carousel {
 .carousel-control-prev,
 .carousel-control-next {
   background-image: none;
+  filter: invert(50%);
 }
 
 @media screen and (min-height: 950px) {
@@ -231,8 +234,7 @@ ngb-carousel {
   }
 
   .lk-navtabs {
-    text-align: center;
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   .lk-title {

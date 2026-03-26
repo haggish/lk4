@@ -29,7 +29,7 @@ const TABS: NavTab[] = [
           <small>{{ profession() }}</small>
         </h1>
       </div>
-      <nav class="col-12 col-sm-5 col-md-4" aria-label="Main navigation">
+      <nav class="col-12 col-sm-5 col-md-4 ms-auto" aria-label="Main navigation">
         <ul class="nav nav-pills lk-navtabs" role="list">
           @for (tab of tabs; track tab.route) {
             <li class="nav-item" role="listitem">

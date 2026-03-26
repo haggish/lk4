@@ -13,7 +13,7 @@ import { LanguageService } from '../../shared/services/language.service';
           [attr.aria-label]="langToggleLabel()"
         >{{ langToggleLabel() }}</button>
       </div>
-      <div class="col-12 col-sm-6">
+      <div class="col-12 col-sm-6 ms-auto">
         <p class="footer-links">
           <a href="https://www.instagram.com/laurakarki/" target="_blank" rel="noopener noreferrer">
             {{ igLabel() }}
