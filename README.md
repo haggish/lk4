@@ -2,6 +2,21 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
 
+Then added [ng-Bootstrap] (https://ng-bootstrap.github.io/).
+
+Then Claude asked to generate the site according to the [old site spec](src/spec/site.md) and a reference to the [old site GitHub repo](https://github.com/haggish/lk2/). Angular CLI MCP was used.
+
+This was verified according to my Angular 21 knowledge and IMO produced a quite nicely functioning Angular 21 application with Bootstrap components, including fully working i18n that was not the complicated Angular I18N, but a nice clean dynamic one.
+
+The CSS was off, which was fixed using Firecrawl MCP and prompting the CSS to be modified according to the [old site](https://laurakarki.com).
+
+Remaining CSS bugs fixed using additional promps and Angular DevTools AI.
+
+Added Vitest unit tests aided by Claude.
+Added Playwright end-to-end tests aided by Claude.
+
+Took about four hours, including the time spent on waiting for more tokens :)
+
 ## Development server
 
 To start a local development server, run:
