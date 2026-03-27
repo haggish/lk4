@@ -149,27 +149,27 @@ h1 {
 /* ─── Links & nav accents ────────────────────────────────────────────────────── */
 
 a {
-  color: #428bca;
+  color: #e05a8a;
 }
 
 a:hover {
-  color: #2a6496;
+  color: #b8406e;
   text-decoration: underline;
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .nav-link.active:hover,
 .nav-pills .nav-link.active:focus {
-  background-color: #428bca;
+  background-color: #e05a8a;
   color: white;
 }
 
 .nav-pills .nav-link {
-  color: #428bca;
+  color: #e05a8a;
 }
 
 .nav-pills .nav-link:hover {
-  color: #2a6496;
+  color: #b8406e;
 }
 
 /* ─── Carousel ───────────────────────────────────────────────────────────────── */
