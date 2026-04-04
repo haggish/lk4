@@ -14,6 +14,7 @@ import type { CfEntry, ArtworkFields } from '../../shared/models/contentful.mode
       [showNavigationArrows]="true"
       [showNavigationIndicators]="false"
       [keyboard]="true"
+      [interval]="0"
     >
       @for (item of items(); track item.sys.id) {
         <ng-template ngbSlide>
