@@ -17,6 +17,8 @@ Added Playwright end-to-end tests aided by Claude.
 
 Took about four hours, including the time spent on waiting for more tokens :)
 
+Phase 2: Migrated all content to Contentful CMS. Why Contentful? Because they hosted nice node.js Meetups in Berlin and offered free beer and pizza. And I have had absolutely no problems with the softaware
+
 ## Development server
 
 To start a local development server, run:
