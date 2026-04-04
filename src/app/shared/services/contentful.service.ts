@@ -33,6 +33,7 @@ export class ContentfulService {
         locale,
         order: ['-fields.date' as any],
         include: 1,
+        limit: 5,
       });
       return res.items as unknown as CfEntry<NewsEntryFields>[];
     },
