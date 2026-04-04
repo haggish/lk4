@@ -1,11 +1,21 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { LanguageService } from '../../shared/services/language.service';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ContentfulService } from '../../shared/services/contentful.service';
+import { RichTextPipe } from '../../shared/pipes/rich-text.pipe';
 
 @Component({
   selector: 'app-other',
+  imports: [RichTextPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './other.html',
+  template: `
+    <div class="scrolled-content">
+      @if (body(); as doc) {
+        <div [innerHTML]="doc | richText"></div>
+      }
+    </div>
+  `,
 })
 export class OtherComponent {
-  readonly lang = inject(LanguageService).lang;
+  private page = inject(ContentfulService).pageContent('other');
+
+  readonly body = computed(() => this.page.value()?.fields.body ?? null);
 }

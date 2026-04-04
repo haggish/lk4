@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { LanguageService } from '../../shared/services/language.service';
-import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
-import { NEWS } from '../../shared/data/translations';
+import { ContentfulService } from '../../shared/services/contentful.service';
+import { RichTextPipe } from '../../shared/pipes/rich-text.pipe';
 
 @Component({
   selector: 'app-landing',
-  imports: [NgOptimizedImage, SafeHtmlPipe],
+  imports: [NgOptimizedImage, RichTextPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="scrolled-content">
@@ -19,9 +18,17 @@ import { NEWS } from '../../shared/data/translations';
         priority
       />
 
-      @for (item of newsItems(); track item.titleHtml) {
-        <h4 [innerHTML]="item.titleHtml | safeHtml"></h4>
-        <p [innerHTML]="item.descHtml | safeHtml"></p>
+      @for (item of newsItems(); track item.sys.id) {
+        <h4>
+          @if (item.fields.link) {
+            <a [href]="item.fields.link" target="_blank" rel="noopener noreferrer">
+              {{ item.fields.title }}
+            </a>
+          } @else {
+            {{ item.fields.title }}
+          }
+        </h4>
+        <div [innerHTML]="item.fields.body | richText"></div>
       }
     </div>
   `,
@@ -35,7 +42,7 @@ import { NEWS } from '../../shared/data/translations';
   `],
 })
 export class LandingComponent {
-  private lang = inject(LanguageService).lang;
+  private contentful = inject(ContentfulService);
 
-  readonly newsItems = computed(() => NEWS[this.lang()]);
+  readonly newsItems = computed(() => this.contentful.newsEntries.value() ?? []);
 }

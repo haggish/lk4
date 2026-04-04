@@ -1,54 +1,47 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { LanguageService } from '../../shared/services/language.service';
-import { TimeRangePipe } from '../../shared/pipes/time-range.pipe';
-import { CV } from '../../shared/data/translations';
-import { CvSection, CvSubsectionKey, Lang } from '../../shared/models/content.model';
+import { ContentfulService } from '../../shared/services/contentful.service';
+import type { CfEntry, CvEntryFields } from '../../shared/models/contentful.model';
 
-const SUBSECTION_ORDER: CvSubsectionKey[] = [
-  'selectPrivateExhibitions',
-  'groupExhibitions',
-  'poemPerformances',
-  'worksInCollections',
-  'commissionedWorksPublicArt',
-  'grants',
-  'prizes',
-  'memberships',
-  'residences',
-  'other',
-];
+interface CvViewCategory {
+  name: string;
+  slug: string;
+  entries: CfEntry<CvEntryFields>[];
+}
+
+interface CvViewSection {
+  name: string;
+  slug: string;
+  entries: CfEntry<CvEntryFields>[];
+  categories: CvViewCategory[];
+}
 
 @Component({
   selector: 'app-cv',
-  imports: [TimeRangePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ul class="list-unstyled scrolled-content">
-      @for (section of sections(); track section.key) {
+      @for (section of sections(); track section.slug) {
         <li>
           <div class="row">
-            <h3 class="col-md-offset-1 col-md-11 col-sm-12">{{ section.label }}</h3>
+            <h3 class="col-md-offset-1 col-md-11 col-sm-12">{{ section.name }}</h3>
           </div>
 
-          @if (section.data.values) {
-            @for (entry of section.data.values; track $index) {
-              <div class="row cv-row">
-                <small class="col-md-2 col-sm-3 col-3 cv-time">{{ entry | timeRange }}</small>
-                <div class="col-md-9 col-sm-9 col-9">{{ entry[lang()] }}</div>
-              </div>
-            }
+          @for (entry of section.entries; track entry.sys.id) {
+            <div class="row cv-row">
+              <small class="col-md-2 col-sm-3 col-3 cv-time">{{ entry.fields.time }}</small>
+              <div class="col-md-9 col-sm-9 col-9">{{ entry.fields.content }}</div>
+            </div>
           }
 
-          @if (section.data.subsections) {
-            @for (sub of subsectionsFor(section.key); track sub.key) {
-              <div class="row">
-                <h4 class="col-md-offset-1 col-md-11 col-sm-12 cv-subsection-heading">{{ sub.label }}</h4>
+          @for (cat of section.categories; track cat.slug) {
+            <div class="row">
+              <h4 class="col-md-offset-1 col-md-11 col-sm-12 cv-subsection-heading">{{ cat.name }}</h4>
+            </div>
+            @for (entry of cat.entries; track entry.sys.id) {
+              <div class="row cv-row">
+                <small class="col-md-2 col-sm-3 col-3 cv-time">{{ entry.fields.time }}</small>
+                <div class="col-md-9 col-sm-9 col-9">{{ entry.fields.content }}</div>
               </div>
-              @for (entry of sub.values; track $index) {
-                <div class="row cv-row">
-                  <small class="col-md-2 col-sm-3 col-3 cv-time">{{ entry | timeRange }}</small>
-                  <div class="col-md-9 col-sm-9 col-9">{{ entry[lang()] }}</div>
-                </div>
-              }
             }
           }
         </li>
@@ -71,27 +64,61 @@ const SUBSECTION_ORDER: CvSubsectionKey[] = [
   `],
 })
 export class CvComponent {
-  private langService = inject(LanguageService);
-  readonly lang = this.langService.lang;
+  private contentful = inject(ContentfulService);
 
   readonly sections = computed(() => {
-    const l = this.lang();
-    return [
-      { key: 'education' as const, label: CV.education[l], data: CV.education },
-      { key: 'artisticActivity' as const, label: CV.artisticActivity[l], data: CV.artisticActivity },
-      { key: 'jobExperience' as const, label: CV.jobExperience[l], data: CV.jobExperience },
-    ];
-  });
+    const entries = this.contentful.cvEntries.value() ?? [];
+    if (entries.length === 0) return [];
 
-  subsectionsFor(sectionKey: 'education' | 'artisticActivity' | 'jobExperience') {
-    const section: CvSection = CV[sectionKey];
-    if (!section.subsections) return [];
-    const l = this.lang();
-    return SUBSECTION_ORDER
-      .filter(k => section.subsections![k])
-      .map(k => {
-        const sub = section.subsections![k]!;
-        return { key: k, label: sub[l as Lang], values: sub.values };
-      });
-  }
+    const sectionMap = new Map<string, {
+      name: string;
+      slug: string;
+      sortOrder: number;
+      entries: CfEntry<CvEntryFields>[];
+      categoryMap: Map<string, { name: string; slug: string; sortOrder: number; entries: CfEntry<CvEntryFields>[] }>;
+    }>();
+
+    for (const entry of entries) {
+      const section = entry.fields.section;
+      if (!section?.fields) continue;
+
+      const sSlug = section.fields.slug;
+      if (!sectionMap.has(sSlug)) {
+        sectionMap.set(sSlug, {
+          name: section.fields.name,
+          slug: sSlug,
+          sortOrder: section.fields.sortOrder ?? 0,
+          entries: [],
+          categoryMap: new Map(),
+        });
+      }
+      const sGroup = sectionMap.get(sSlug)!;
+
+      const category = entry.fields.category;
+      if (category?.fields) {
+        const cSlug = category.fields.slug;
+        if (!sGroup.categoryMap.has(cSlug)) {
+          sGroup.categoryMap.set(cSlug, {
+            name: category.fields.name,
+            slug: cSlug,
+            sortOrder: category.fields.sortOrder ?? 0,
+            entries: [],
+          });
+        }
+        sGroup.categoryMap.get(cSlug)!.entries.push(entry);
+      } else {
+        sGroup.entries.push(entry);
+      }
+    }
+
+    return [...sectionMap.values()]
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map<CvViewSection>(s => ({
+        name: s.name,
+        slug: s.slug,
+        entries: s.entries,
+        categories: [...s.categoryMap.values()]
+          .sort((a, b) => a.sortOrder - b.sortOrder),
+      }));
+  });
 }

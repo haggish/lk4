@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { Lang } from '../models/content.model';
+
+export type Lang = 'fi' | 'en';
 
 @Injectable({ providedIn: 'root' })
 export class LanguageService {

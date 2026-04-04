@@ -1,0 +1,78 @@
+Plan: Generate Contentful content population script from lk4 source
+Goal
+Create a Node.js script (populate-contentful.mjs) that reads the existing content from the lk4 Angular source code and creates corresponding entries in Contentful using the Content Management API (flat v12 API, same style as setup-contentful.mjs).
+Prerequisites
+
+The content model is already created in Contentful (via setup-contentful.mjs)
+The contentful-management npm package is installed
+Environment variables CONTENTFUL_SPACE_ID and CONTENTFUL_MANAGEMENT_TOKEN are available
+
+Step 1: Identify content source files
+Scan the src/app directory for files containing the hardcoded content. Look for:
+
+i18n / translation files — likely a .ts or .json file with Finnish (fi) and English (en) string maps
+CV data — arrays or objects containing education, exhibitions, grants, jobs, etc. with time and content fields
+News data — arrays with title, date, body, link
+Artwork/works data — arrays with title, year, dimensions, image references
+Page content — biography/intro text, "other" page text
+
+Run: find src/app -name "*.ts" -o -name "*.json" | xargs grep -l "exhibition\|näyttely\|biography\|news\|works\|carousel" to locate them.
+Step 2: Understand the data shapes
+Read each identified file and understand how the content is structured. Specifically note:
+
+How translations are keyed (e.g. { en: { ... }, fi: { ... } })
+How CV entries are organized — what denotes section (education vs artistic activity vs jobs) and sub-categories (exhibitions, grants, etc.)
+How artworks are listed — what fields exist, how images are referenced (filename? path?)
+How news items are structured
+
+Step 3: Write the population script
+Create populate-contentful.mjs with the following structure:
+javascriptimport { createClient } from "contentful-management";
+
+const client = createClient(
+  { accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN },
+  { defaults: { spaceId: process.env.CONTENTFUL_SPACE_ID, environmentId: "master" } }
+);
+The script should create entries in this order (respecting reference dependencies):
+3a. Lookup entries first (no references to other entries):
+
+CV Sections — Create entries for "Education", "Artistic Activity", "Job Experience" with both en-US and fi localized names
+CV Categories — Create entries for each sub-category under Artistic Activity ("select private exhibitions", "group exhibitions", "poem performances", etc.), each referencing its parent CV Section
+Artwork Categories — Create entries for whatever groupings exist in the works/archive data
+Social Links — Create entries for Instagram, blog, Facebook, Artists' Association of Finland, Finnish Designers links (visible in the footer)
+
+3b. Content entries (reference the lookups):
+5. CV Entries — Create one entry per CV line item, referencing the appropriate section and category. The time field gets the date/range string, content gets the localized description
+6. Artworks — Create one entry per artwork with localized title, year, dimensions, and a reference to its category. Note: image assets must be created first — upload each image via client.asset.create() and client.asset.processForAllLocales(), then reference the asset in the artwork entry
+7. News Entries — Create entries with localized title, date, and rich text body. For the body field, construct a Contentful Rich Text document structure: { nodeType: "document", content: [{ nodeType: "paragraph", content: [{ nodeType: "text", value: "...", marks: [], data: {} }], data: {} }], data: {} }
+8. Page Content — Create entries for "intro" and "other" page slugs with localized rich text body
+9. Site Settings — Create a single entry with the profession subtitle, contact email, hero image asset reference, and references to the social link entries
+3c. Publish all entries after creation.
+Step 4: Handle images
+For artworks and the hero image:
+
+Find where images are stored in the repo (likely src/assets/ or public/)
+For each image, create a Contentful asset by providing the image URL (if they're accessible online, e.g. on the live site at laurakarki.com) or by using the upload API if only available locally
+After creating each asset, call client.asset.processForAllLocales() and then client.asset.publish() before referencing it in artwork entries
+
+Step 5: Make the script idempotent
+
+Before creating each entry, check if it already exists (e.g. by querying with a unique field like slug or pageSlug)
+Use try/catch to handle conflicts gracefully
+Log progress for each entry created
+
+Step 6: Run and verify
+powershell$env:CONTENTFUL_SPACE_ID="your_id"
+$env:CONTENTFUL_MANAGEMENT_TOKEN="your_token"
+node populate-contentful.mjs
+Then verify in the Contentful web app that all entries appear correctly with both language versions.
+
+Key technical notes for Claude Code
+
+Rich Text format: Contentful Rich Text fields expect a specific JSON structure with nodeType: "document" at the root. Plain strings won't work. Any HTML or markdown from the source needs to be converted to this structure.
+Localized fields: When creating entries, localized field values must be wrapped in locale keys: { "en-US": "English text", "fi": "Finnish text" }. Non-localized fields still need the default locale: { "en-US": value }.
+References: Link fields use the format { "en-US": { sys: { type: "Link", linkType: "Entry", id: "entryId" } } }.
+Asset references: Same format but with linkType: "Asset".
+The flat v12 API uses client.entry.create({ contentTypeId: "artwork" }, { fields: { ... } }) — not the old waterfall pattern.
+Rate limiting: Contentful rate-limits the CMA. Add small delays between requests if creating many entries (e.g. await new Promise(r => setTimeout(r, 200)) between each creation).
+NO12

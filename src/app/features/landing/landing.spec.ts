@@ -1,59 +1,53 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { LandingComponent } from './landing';
-import { LanguageService } from '../../shared/services/language.service';
-import { NEWS } from '../../shared/data/translations';
+import { ContentfulService } from '../../shared/services/contentful.service';
+
+const mockNewsEntries = [
+  {
+    sys: { id: 'n1' },
+    fields: {
+      title: 'Test Exhibition',
+      date: '2025-04-25',
+      body: { nodeType: 'document', data: {}, content: [{ nodeType: 'paragraph', data: {}, content: [{ nodeType: 'text', value: 'A test description', marks: [], data: {} }] }] },
+      link: 'https://example.com',
+    },
+  },
+];
 
 describe('LandingComponent', () => {
   let fixture: ComponentFixture<LandingComponent>;
-  let langService: LanguageService;
 
   beforeEach(async () => {
-    localStorage.clear();
+    const mockContentful = {
+      newsEntries: { value: signal(mockNewsEntries) },
+    };
+
     await TestBed.configureTestingModule({
       imports: [LandingComponent],
+      providers: [
+        { provide: ContentfulService, useValue: mockContentful },
+      ],
     }).compileComponents();
 
-    langService = TestBed.inject(LanguageService);
     fixture = TestBed.createComponent(LandingComponent);
     fixture.detectChanges();
   });
 
-  afterEach(() => localStorage.clear());
-
-  it('renders the correct number of news items', () => {
+  it('renders news items from Contentful', () => {
     const headings = fixture.nativeElement.querySelectorAll('h4');
-    expect(headings.length).toBe(NEWS.en.length);
+    expect(headings.length).toBe(1);
   });
 
-  it('renders news title as HTML (contains anchor)', () => {
-    const firstH4: HTMLElement = fixture.nativeElement.querySelector('h4');
-    expect(firstH4.querySelector('a')).not.toBeNull();
+  it('renders news title with link', () => {
+    const anchor: HTMLAnchorElement = fixture.nativeElement.querySelector('h4 a');
+    expect(anchor).not.toBeNull();
+    expect(anchor.textContent?.trim()).toBe('Test Exhibition');
+    expect(anchor.href).toContain('example.com');
   });
 
-  it('renders English news items by default', () => {
-    const firstH4: HTMLElement = fixture.nativeElement.querySelector('h4');
-    expect(firstH4.textContent).toContain('Furry Darlings');
-  });
-
-  it('renders Finnish news items after switching language', () => {
-    langService.toggle();
-    fixture.detectChanges();
-
-    const paragraphs: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('p');
-    const allText = Array.from(paragraphs).map(p => p.textContent).join(' ');
-    expect(allText).toContain('Yksityisnäyttely');
-  });
-
-  it('renders the dog photo', () => {
+  it('renders the hero photo', () => {
     const img: HTMLImageElement = fixture.nativeElement.querySelector('img');
     expect(img).not.toBeNull();
-    expect(img.getAttribute('ng-img') ?? img.src).toBeTruthy();
-  });
-
-  it('news items open links in a new tab', () => {
-    const anchors: NodeListOf<HTMLAnchorElement> = fixture.nativeElement.querySelectorAll('h4 a');
-    Array.from(anchors).forEach(a => {
-      expect(a.getAttribute('target')).toBe('_blank');
-    });
   });
 });

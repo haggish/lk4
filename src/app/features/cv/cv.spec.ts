@@ -1,79 +1,79 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { CvComponent } from './cv';
-import { LanguageService } from '../../shared/services/language.service';
-import { CV } from '../../shared/data/translations';
+import { ContentfulService } from '../../shared/services/contentful.service';
+
+const mockCvEntries = [
+  {
+    sys: { id: 'e1' },
+    fields: {
+      time: '2006',
+      content: 'Master of Arts, UIAH, Helsinki',
+      section: { fields: { name: 'Education', slug: 'education', sortOrder: 1 } },
+      sortOrder: 1,
+    },
+  },
+  {
+    sys: { id: 'e2' },
+    fields: {
+      time: '2025',
+      content: 'Gallery Halmetoja, Helsinki',
+      section: { fields: { name: 'Artistic activity', slug: 'artistic-activity', sortOrder: 2 } },
+      category: { fields: { name: 'Select private exhibitions', slug: 'select-private-exhibitions', sortOrder: 1 } },
+      sortOrder: 2,
+    },
+  },
+  {
+    sys: { id: 'e3' },
+    fields: {
+      time: '2014–',
+      content: 'Showroom Berliini',
+      section: { fields: { name: 'Job experience', slug: 'job-experience', sortOrder: 3 } },
+      sortOrder: 3,
+    },
+  },
+];
 
 describe('CvComponent', () => {
   let fixture: ComponentFixture<CvComponent>;
-  let langService: LanguageService;
 
   beforeEach(async () => {
-    localStorage.clear();
+    const mockContentful = {
+      cvEntries: { value: signal(mockCvEntries) },
+    };
+
     await TestBed.configureTestingModule({
       imports: [CvComponent],
+      providers: [
+        { provide: ContentfulService, useValue: mockContentful },
+      ],
     }).compileComponents();
 
-    langService = TestBed.inject(LanguageService);
     fixture = TestBed.createComponent(CvComponent);
     fixture.detectChanges();
   });
 
-  afterEach(() => localStorage.clear());
-
   it('renders 3 main section headings', () => {
-    const h3s: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('h3');
+    const h3s = fixture.nativeElement.querySelectorAll('h3');
     expect(h3s.length).toBe(3);
   });
 
-  it('renders English section labels by default', () => {
+  it('renders section labels in order', () => {
     const h3s: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('h3');
     const labels = Array.from(h3s).map(h => h.textContent?.trim());
-    expect(labels).toContain('Education');
-    expect(labels).toContain('Artistic activity');
-    expect(labels).toContain('Job experience');
+    expect(labels).toEqual(['Education', 'Artistic activity', 'Job experience']);
   });
 
-  it('renders Finnish section labels after language switch', () => {
-    langService.toggle();
-    fixture.detectChanges();
-
-    const h3s: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('h3');
-    const labels = Array.from(h3s).map(h => h.textContent?.trim());
-    expect(labels).toContain('Koulutus');
-    expect(labels).toContain('Taiteellinen toiminta');
-    expect(labels).toContain('Työkokemus');
+  it('renders subsection headings for categories', () => {
+    const h4s = fixture.nativeElement.querySelectorAll('h4');
+    expect(h4s.length).toBe(1);
+    expect(h4s[0].textContent?.trim()).toBe('Select private exhibitions');
   });
 
-  it('renders subsection headings for Artistic Activity', () => {
-    const h4s: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('h4');
-    expect(h4s.length).toBeGreaterThan(0);
-    const labels = Array.from(h4s).map(h => h.textContent?.trim());
-    expect(labels).toContain('Group exhibitions');
-    expect(labels).toContain('Grants');
-    expect(labels).toContain('Residences');
-  });
-
-  it('renders the correct number of education entries', () => {
-    // Education section is first; count rows in first section only
-    const allRows = fixture.nativeElement.querySelectorAll('.cv-row');
-    expect(allRows.length).toBeGreaterThanOrEqual(CV.education.values!.length);
-  });
-
-  it('renders time ranges for dated entries', () => {
+  it('renders time values', () => {
     const times: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('.cv-time');
-    const nonEmpty = Array.from(times).filter(t => t.textContent?.trim() !== '');
-    expect(nonEmpty.length).toBeGreaterThan(0);
-  });
-
-  it('renders continuing entries with trailing dash', () => {
-    const times: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('.cv-time');
-    const continuing = Array.from(times).find(t => t.textContent?.trim().endsWith('-'));
-    expect(continuing).toBeTruthy();
-  });
-
-  it('renders month-granularity residency entries correctly', () => {
-    const times: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('.cv-time');
-    const monthEntry = Array.from(times).find(t => /^\d+\/\d{4}/.test(t.textContent?.trim() ?? ''));
-    expect(monthEntry).toBeTruthy();
+    const values = Array.from(times).map(t => t.textContent?.trim());
+    expect(values).toContain('2006');
+    expect(values).toContain('2014–');
   });
 });

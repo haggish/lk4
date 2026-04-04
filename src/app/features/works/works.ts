@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
-import { LanguageService } from '../../shared/services/language.service';
-import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
-import { WORKS } from '../../shared/data/translations';
+import { ContentfulService } from '../../shared/services/contentful.service';
+import type { CfEntry, ArtworkFields } from '../../shared/models/contentful.model';
 
 @Component({
   selector: 'app-works',
-  imports: [NgbCarousel, NgbSlide, SafeHtmlPipe],
+  imports: [NgbCarousel, NgbSlide],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ngb-carousel
@@ -15,18 +14,20 @@ import { WORKS } from '../../shared/data/translations';
       [showNavigationIndicators]="false"
       [keyboard]="true"
     >
-      @for (item of items(); track item.name; let i = $index) {
+      @for (item of items(); track item.sys.id) {
         <ng-template ngbSlide>
           <div class="carousel-image-container">
-            <img
-              class="carousel-img"
-              [src]="'/images/' + (i + 1) + '.jpg'"
-              [alt]="item.name"
-            />
+            @if (imageUrl(item); as url) {
+              <img
+                class="carousel-img"
+                [src]="url"
+                [alt]="item.fields.title"
+              />
+            }
           </div>
           <div class="carousel-caption">
-            <h3>{{ item.name }}</h3>
-            <p [innerHTML]="item.desc | safeHtml"></p>
+            <h3>{{ item.fields.title }}</h3>
+            <p>{{ item.fields.dimensions }}</p>
           </div>
         </ng-template>
       }
@@ -51,7 +52,15 @@ import { WORKS } from '../../shared/data/translations';
   `],
 })
 export class WorksComponent {
-  private lang = inject(LanguageService).lang;
+  private contentful = inject(ContentfulService);
 
-  readonly items = computed(() => WORKS.map(w => w[this.lang()]));
+  readonly items = computed(() =>
+    (this.contentful.artworks.value() ?? [])
+      .filter(a => !a.fields.isArchive)
+  );
+
+  imageUrl(item: CfEntry<ArtworkFields>): string | null {
+    const url = item.fields.image?.fields?.file?.url;
+    return url ? 'https:' + url : null;
+  }
 }

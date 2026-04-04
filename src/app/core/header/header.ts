@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LanguageService } from '../../shared/services/language.service';
+import { ContentfulService } from '../../shared/services/contentful.service';
 
 interface NavTab {
   route: string;
@@ -48,9 +49,10 @@ const TABS: NavTab[] = [
 })
 export class HeaderComponent {
   private langService = inject(LanguageService);
+  private contentful = inject(ContentfulService);
   readonly lang = this.langService.lang;
   readonly tabs = TABS;
   readonly profession = computed(() =>
-    this.lang() === 'fi' ? 'kuvataiteilija' : 'visual artist'
+    this.contentful.siteSettings.value()?.fields.profession ?? ''
   );
 }
