@@ -39,6 +39,9 @@ testem.log
 /typings
 __screenshots__/
 
+# Firecrawl scraped data
+.firecrawl/
+
 # Environment files (contain API tokens)
 /src/environments/environment.ts
 /src/environments/environment.prod.ts

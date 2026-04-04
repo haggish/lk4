@@ -45,6 +45,7 @@ export class ContentfulService {
       const res = await this.client.getEntries({
         content_type: 'artwork',
         locale,
+        order: ['-fields.year' as any],
         include: 2,
         limit: 200,
       });
