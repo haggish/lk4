@@ -1,22 +1,20 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
 import { ContentfulService } from '../../shared/services/contentful.service';
 import { RichTextPipe } from '../../shared/pipes/rich-text.pipe';
 
 @Component({
   selector: 'app-landing',
-  imports: [NgOptimizedImage, RichTextPipe],
+  imports: [RichTextPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="scrolled-content">
-      <img
-        ngSrc="/images/a_dog_enjoys_the_fresh_air.jpg"
-        width="873"
-        height="845"
-        alt="A dog enjoys the fresh air"
-        class="news-photo"
-        priority
-      />
+      @if (heroUrl(); as url) {
+        <img
+          [src]="url"
+          [alt]="heroTitle()"
+          class="news-photo"
+        />
+      }
 
       @for (item of newsItems(); track item.sys.id) {
         <h4>
@@ -45,4 +43,13 @@ export class LandingComponent {
   private contentful = inject(ContentfulService);
 
   readonly newsItems = computed(() => this.contentful.newsEntries.value() ?? []);
+
+  readonly heroUrl = computed(() => {
+    const file = this.contentful.siteSettings.value()?.fields.heroImage?.fields?.file;
+    return file?.url ? 'https:' + file.url : null;
+  });
+
+  readonly heroTitle = computed(() =>
+    this.contentful.siteSettings.value()?.fields.heroImage?.fields?.title ?? ''
+  );
 }
