@@ -48,6 +48,14 @@ import { WORKS } from '../../shared/data/translations';
       max-width: 100%;
       object-fit: contain;
     }
+    .carousel-caption {
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
+    @media screen and (min-height: 950px) {
+      .carousel-caption {
+        text-shadow: none;
+      }
+    }
   `],
 })
 export class WorksComponent {
