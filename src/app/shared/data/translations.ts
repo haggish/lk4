@@ -5,46 +5,61 @@ import { CvData, CvEntry, NewsItem, WorkItemBilingual } from '../models/content.
 export const NEWS: { fi: NewsItem[]; en: NewsItem[] } = {
   fi: [
     {
-      titleHtml: '<a target="_blank" href="https://galleryhalmetoja.com/exhibitions/3786/">Furry Darlings</a>',
-      descHtml: 'Yksityisnäyttely Gallery Halmetojassa 25.4.-18.5.2025. Näyttelyn avajaiset 24.4.2025 klo 17-19',
+      titleHtml:
+        '<a target="_blank" href="https://suvi-pinx.fi/fi_FI/taidenayttely">Veden ja valon välillä</a>',
+      descHtml: 'Ryhmänäyttely Suvi-Pinxissä 13.6.-9.8.2026. Näyttelyn avajaiset 13.6.2026',
     },
     {
-      titleHtml: '<a target="_blank" href="http://subjectobject.de/index.html">Künstler=innen</a>',
-      descHtml: 'Ryhmänäyttely Galerie subjectobjectissa 8.3.-5.4.2025. Näyttelyn avajaiset 7.3.2025 klo 19-22',
+      titleHtml:
+        '<a target="_blank" href="https://www.instagram.com/finnishartagency/">Slow Art Gallery</a>',
+      descHtml: 'Ryhmänäyttely Finnish Art Agencyssä 25.8.-23.11.2026',
     },
     {
-      titleHtml: '<a target="_blank" href="https://vbk-art.de/the-new-you-we-me/">The new you-we-me</a>',
-      descHtml: 'Osa EMOP Berliniä (European Month of Photography). Ryhmänäyttely Verein Berliner Künstler-galleriassa 15.3.-6.4.2025. Avajaiset 14.3. klo 19',
+      titleHtml:
+        '<a target="_blank" href="https://orimattila.fi/vapaa-aika-ja-hyvinvointi/taidemuseo/vaihtuvat-nayttelyt/">Orimattilan Taidemuseo</a>',
+      descHtml: 'Yksityisnäyttely 14.10.-29.11.2026. Näyttelyn avajaiset 14.10.2026 klo 18',
     },
     {
-      titleHtml: '<a target="_blank" href="https://vbk-art.de/">UPDATE 2025</a>',
-      descHtml: 'Group exhibition at Verein Berliner Künstler gallery 11.4.-11.5.2025. Exhibition opening 11.4. at 19',
+      titleHtml:
+        '<a target="_blank" href="https://galleryhalmetoja.com/exhibitions/3786/">Furry Darlings</a>',
+      descHtml:
+        'Yksityisnäyttely Gallery Halmetojassa 25.4.-18.5.2025. Näyttelyn avajaiset 24.4.2025 klo 17-19',
     },
     {
-      titleHtml: '<a target="_blank" href="https://finnland-institut.de/events/visiting-artists-2024-goman-jaeaeskelaeinen-kaerki-pussinen-raesaenen-salonen/?lang=en">Visiting Art/ists 2024: Ich finde dich in allen diesen Dingen</a>',
-      descHtml: 'Ryhmänäyttely Suomi-instituutissa 8.2.-14.11.2024. Avajaiset 8.2. klo 18-21. <a target="_blank" href="https://finnland-institut.de/wp-content/uploads/2024/02/Visiting-Artists-2024-ScreenPDF_verkleinert.pdf">Linkki katalogiin</a>',
+      titleHtml:
+        '<a target="_blank" href="https://finnland-institut.de/events/visiting-artists-2024-goman-jaeaeskelaeinen-kaerki-pussinen-raesaenen-salonen/?lang=en">Visiting Art/ists 2024: Ich finde dich in allen diesen Dingen</a>',
+      descHtml:
+        'Ryhmänäyttely Suomi-instituutissa 8.2.-14.11.2024. Avajaiset 8.2. klo 18-21. <a target="_blank" href="https://finnland-institut.de/wp-content/uploads/2024/02/Visiting-Artists-2024-ScreenPDF_verkleinert.pdf">Linkki katalogiin</a>',
     },
   ],
   en: [
     {
-      titleHtml: '<a target="_blank" href="https://galleryhalmetoja.com/exhibitions/3786/">Furry Darlings</a>',
-      descHtml: 'Solo exhibition at Gallery Halmetoja 25.4.-18.5.2025. Exhibition opening 24.4.2025 at 17-19',
+      titleHtml:
+        '<a target="_blank" href="https://suvi-pinx.fi/fi_FI/taidenayttely">Veden ja valon välillä</a>',
+      descHtml: 'Group exhibition at Suvi-Pinx 13.6.-9.8.2026. Exhibition opening 13.6.2026',
     },
     {
-      titleHtml: '<a target="_blank" href="http://subjectobject.de/index.html">Künstler=innen</a>',
-      descHtml: 'Group exhibition at Galerie subjectobject 8.3.-5.4.2025. Exhibition opening 7.3.2025 at 19-22',
+      titleHtml:
+        '<a target="_blank" href="https://www.instagram.com/finnishartagency/">Slow Art Gallery</a>',
+      descHtml: 'Group exhibition at Finnish Art Agency 25.8.-23.11.2026',
     },
     {
-      titleHtml: '<a target="_blank" href="https://vbk-art.de/the-new-you-we-me/">The new you-we-me</a>',
-      descHtml: 'Part of EMOP Berlin (European Month of Photography). Group exhibition at Verein Berliner Künstler gallery 15.3.-6.4.2025. Exhibition opening 14.3. at 19',
+      titleHtml:
+        '<a target="_blank" href="https://orimattila.fi/vapaa-aika-ja-hyvinvointi/taidemuseo/vaihtuvat-nayttelyt/">Orimattila Art Museum</a>',
+      descHtml:
+        'Solo exhibition 14.10.-29.11.2026. Exhibition opening 14.10.2026 at 18',
     },
     {
-      titleHtml: '<a target="_blank" href="https://vbk-art.de/">UPDATE 2025</a>',
-      descHtml: 'Group exhibition at Verein Berliner Künstler gallery 11.4.-11.5.2025. Exhibition opening 11.4. at 19',
+      titleHtml:
+        '<a target="_blank" href="https://galleryhalmetoja.com/exhibitions/3786/">Furry Darlings</a>',
+      descHtml:
+        'Solo exhibition at Gallery Halmetoja 25.4.-18.5.2025. Exhibition opening 24.4.2025 at 17-19',
     },
     {
-      titleHtml: '<a target="_blank" href="https://finnland-institut.de/events/visiting-artists-2024-goman-jaeaeskelaeinen-kaerki-pussinen-raesaenen-salonen/?lang=en">Visiting Art/ists 2024: Ich finde dich in allen diesen Dingen</a>',
-      descHtml: 'Group exhibition in Finnland-Institut 8.2.-14.11.2024. Opening 8.2. 18-21. <a target="_blank" href="https://finnland-institut.de/wp-content/uploads/2024/02/Visiting-Artists-2024-ScreenPDF_verkleinert.pdf">Link to the catalogue PDF</a>',
+      titleHtml:
+        '<a target="_blank" href="https://finnland-institut.de/events/visiting-artists-2024-goman-jaeaeskelaeinen-kaerki-pussinen-raesaenen-salonen/?lang=en">Visiting Art/ists 2024: Ich finde dich in allen diesen Dingen</a>',
+      descHtml:
+        'Group exhibition in Finnland-Institut 8.2.-14.11.2024. Opening 8.2. 18-21. <a target="_blank" href="https://finnland-institut.de/wp-content/uploads/2024/02/Visiting-Artists-2024-ScreenPDF_verkleinert.pdf">Link to the catalogue PDF</a>',
     },
   ],
 };

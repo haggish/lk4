@@ -11,10 +11,10 @@ import { NEWS } from '../../shared/data/translations';
   template: `
     <div class="scrolled-content">
       <img
-        ngSrc="/images/a_dog_enjoys_the_fresh_air.jpg"
+        ngSrc="/images/bear.png"
         width="873"
         height="845"
-        alt="A dog enjoys the fresh air"
+        alt="Tattered children's room teddy bear"
         class="news-photo"
         priority
       />
