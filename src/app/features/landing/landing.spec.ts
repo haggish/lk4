@@ -32,7 +32,7 @@ describe('LandingComponent', () => {
 
   it('renders English news items by default', () => {
     const firstH4: HTMLElement = fixture.nativeElement.querySelector('h4');
-    expect(firstH4.textContent).toContain('Furry Darlings');
+    expect(firstH4.textContent).toContain('Veden ja valon välillä');
   });
 
   it('renders Finnish news items after switching language', () => {
@@ -44,10 +44,11 @@ describe('LandingComponent', () => {
     expect(allText).toContain('Yksityisnäyttely');
   });
 
-  it('renders the dog photo', () => {
+  it('renders the teddy bear photo', () => {
     const img: HTMLImageElement = fixture.nativeElement.querySelector('img');
     expect(img).not.toBeNull();
     expect(img.getAttribute('ng-img') ?? img.src).toBeTruthy();
+    expect(img.getAttribute('alt')).toBe("Tattered children's room teddy bear");
   });
 
   it('news items open links in a new tab', () => {
