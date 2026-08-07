@@ -98,12 +98,12 @@ test.describe('Landing page (/new)', () => {
   });
 
   test('renders news items with headings', async ({ page }) => {
-    await expect(page.locator('h4')).toHaveCount(5);
+    await expect(page.locator('h4')).toHaveCount(NEWS.en.length);
   });
 
   test('news headings contain anchor links', async ({ page }) => {
     const anchors = page.locator('h4 a');
-    await expect(anchors).toHaveCount(5);
+    await expect(anchors).toHaveCount(NEWS.en.length);
   });
 
   test('news links open in new tab', async ({ page }) => {
