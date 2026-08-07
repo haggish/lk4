@@ -7,6 +7,10 @@ describe('LandingComponent', () => {
   let fixture: ComponentFixture<LandingComponent>;
   let langService: LanguageService;
 
+  /** Rendered text of a news HTML snippet, so assertions survive copy changes. */
+  const textOf = (html: string) =>
+    new DOMParser().parseFromString(html, 'text/html').body.textContent;
+
   beforeEach(async () => {
     localStorage.clear();
     await TestBed.configureTestingModule({
@@ -32,7 +36,7 @@ describe('LandingComponent', () => {
 
   it('renders English news items by default', () => {
     const firstH4: HTMLElement = fixture.nativeElement.querySelector('h4');
-    expect(firstH4.textContent).toContain('Veden ja valon välillä');
+    expect(firstH4.textContent).toContain(textOf(NEWS.en[0].titleHtml));
   });
 
   it('renders Finnish news items after switching language', () => {
@@ -41,7 +45,7 @@ describe('LandingComponent', () => {
 
     const paragraphs: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('p');
     const allText = Array.from(paragraphs).map(p => p.textContent).join(' ');
-    expect(allText).toContain('Yksityisnäyttely');
+    expect(allText).toContain(textOf(NEWS.fi[0].descHtml));
   });
 
   it('renders the teddy bear photo', () => {
