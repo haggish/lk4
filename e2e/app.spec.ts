@@ -1,4 +1,8 @@
 import { expect, test } from '@playwright/test';
+import { NEWS } from '../src/app/shared/data/translations';
+
+/** Rendered text of a news HTML snippet, so assertions survive copy changes. */
+const textOf = (html: string) => html.replace(/<[^>]*>/g, '');
 
 test.describe('Navigation', () => {
   test('redirects / to /new', async ({ page }) => {
@@ -111,14 +115,14 @@ test.describe('Landing page (/new)', () => {
   });
 
   test('renders English news by default', async ({ page }) => {
-    await expect(page.locator('h4').first()).toContainText('Furry Darlings');
+    await expect(page.locator('h4').first()).toContainText(textOf(NEWS.en[0].titleHtml));
   });
 
   test('renders Finnish news after language toggle', async ({ page }) => {
     await page.locator('footer button').click();
     const paragraphs = page.locator('p');
     const text = await paragraphs.allTextContents();
-    expect(text.join(' ')).toContain('Yksityisnäyttely');
+    expect(text.join(' ')).toContain(textOf(NEWS.fi[0].descHtml));
   });
 });
 
