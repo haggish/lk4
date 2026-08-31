@@ -6,18 +6,19 @@ export const NEWS: { fi: NewsItem[]; en: NewsItem[] } = {
   fi: [
     {
       titleHtml:
-        '<a target="_blank" href="https://suvi-pinx.fi/fi_FI/taidenayttely">Veden ja valon välillä</a>',
-      descHtml: 'Ryhmänäyttely Suvi-Pinxissä 13.6.-9.8.2026. Näyttelyn avajaiset 13.6.2026',
+        '<a target="_blank" href="https://www.finnishartagency.com/slow-art-gallery-tuo-taiteen-poytaan-yhteistyo-ravintola-finnjavelin-kanssa-kaynnistyy-slow-art-gallery-brings-art-to-the-table-new-partnership-with-restaurant-finnjavel/">Finnjävel x Slow Art Gallery</a>',
+      descHtml:
+        'Ryhmänäyttely ravintola Finnjävelissä (Helsingin Taidehallin yhteydessä) 14.8.-25.10.2026. Avajaiset 13.8. 19:30-21:30. Taiteilijabrunssi 5.9. 12-14:30',
     },
     {
       titleHtml:
-        '<a target="_blank" href="https://www.instagram.com/finnishartagency/">Slow Art Gallery</a>',
-      descHtml: 'Ryhmänäyttely Finnish Art Agencyssä 25.8.-23.11.2026',
+        '<a target="_blank" href="https://orimattila.fi/vapaa-aika-ja-hyvinvointi/taidemuseo/vaihtuvat-nayttelyt/">Furry Darlings in Fall</a>',
+      descHtml: 'Yksityisnäyttely Orimattilan taidemuseossa 15.10.-29.11.2026. Näyttelyn avajaiset 14.10.2026 klo 18-20',
     },
     {
       titleHtml:
-        '<a target="_blank" href="https://orimattila.fi/vapaa-aika-ja-hyvinvointi/taidemuseo/vaihtuvat-nayttelyt/">Orimattilan Taidemuseo</a>',
-      descHtml: 'Yksityisnäyttely 14.10.-29.11.2026. Näyttelyn avajaiset 14.10.2026 klo 18',
+        '<a target="_blank" href="https://miettinen-collection.de/ausstellungen/">Miettinen Collection</a>',
+      descHtml: 'Yksityisnäyttely 7.-28.11.2026. Näyttelyn avajaiset 6.11.2026',
     },
     {
       titleHtml:
@@ -35,19 +36,19 @@ export const NEWS: { fi: NewsItem[]; en: NewsItem[] } = {
   en: [
     {
       titleHtml:
-        '<a target="_blank" href="https://suvi-pinx.fi/fi_FI/taidenayttely">Veden ja valon välillä</a>',
-      descHtml: 'Group exhibition at Suvi-Pinx 13.6.-9.8.2026. Exhibition opening 13.6.2026',
-    },
-    {
-      titleHtml:
-        '<a target="_blank" href="https://www.instagram.com/finnishartagency/">Slow Art Gallery</a>',
-      descHtml: 'Group exhibition at Finnish Art Agency 25.8.-23.11.2026',
-    },
-    {
-      titleHtml:
-        '<a target="_blank" href="https://orimattila.fi/vapaa-aika-ja-hyvinvointi/taidemuseo/vaihtuvat-nayttelyt/">Orimattila Art Museum</a>',
+        '<a target="_blank" href="https://www.finnishartagency.com/slow-art-gallery-tuo-taiteen-poytaan-yhteistyo-ravintola-finnjavelin-kanssa-kaynnistyy-slow-art-gallery-brings-art-to-the-table-new-partnership-with-restaurant-finnjavel/">Finnjävel x Slow Art Gallery</a>',
       descHtml:
-        'Solo exhibition 14.10.-29.11.2026. Exhibition opening 14.10.2026 at 18',
+        'Group exhibition at restaurant Finnjävel (in connection with Helsinki Art Hall) 14.8.-23.11.2026. Opening 13.8. at 19:30-21:30. Artist Brunch 5.9. at 12-14:30',
+    },
+    {
+      titleHtml:
+        '<a target="_blank" href="https://orimattila.fi/vapaa-aika-ja-hyvinvointi/taidemuseo/vaihtuvat-nayttelyt/">Furry Darlings in Fall</a>',
+      descHtml: 'Solo exhibition at Orimattila Art Museum 15.10.-29.11.2026. Exhibition opening 14.10.2026 at 18-20',
+    },
+    {
+      titleHtml:
+        '<a target="_blank" href="https://miettinen-collection.de/ausstellungen/">Miettinen Collection</a>',
+      descHtml: 'Solo exhibition 7.-28.11.2026. Opening 6.11.2026',
     },
     {
       titleHtml:
