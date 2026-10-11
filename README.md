@@ -71,6 +71,46 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
+## Continuous integration and deployment
+
+`.github/workflows/ci.yml` runs on every pull request and on pushes to `master`:
+it checks the image assets, runs the unit tests, builds, then runs the Playwright
+suite across chromium, firefox and webkit. On `master` a second job deploys the
+build to the server with `rsync` over SSH.
+
+The deploy job starts on every push to `master` but short-circuits with a notice
+until all four secrets below exist, so it is safe to merge before configuring it.
+
+Repository secrets (Settings → Secrets and variables → Actions):
+
+| Secret               | Value                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------- |
+| `DEPLOY_HOST`        | server hostname                                                                        |
+| `DEPLOY_USER`        | SSH user owning the web root                                                           |
+| `DEPLOY_SSH_KEY`     | private key, full PEM including header and footer lines                                |
+| `DEPLOY_KNOWN_HOSTS` | output of `ssh-keyscan <host>`, so the host key is pinned rather than blindly accepted |
+
+Optionally set the `DEPLOY_PATH` _variable_ (not a secret) to override the default
+web root of `/var/www/site2026`.
+
+On the server, generate a key pair dedicated to deploys and authorise it for a
+user that owns only the web root:
+
+```bash
+ssh-keygen -t ed25519 -f deploy_key -C github-actions -N ''
+cat deploy_key.pub >> ~/.ssh/authorized_keys   # on the server
+```
+
+Put the private half in `DEPLOY_SSH_KEY` and keep it out of the repo. Note that
+`rsync --delete` writes straight into the web root, so there is a sub-second
+window where old and new files coexist; serving from a `releases/` directory with
+a `current` symlink and swapping it atomically removes that, at the cost of
+pointing the server's nginx `root` at the symlink.
+
+Note also that `nginx.conf` in this repo is used only by the Docker image. The
+server has its own nginx configuration, maintained by hand, so SPA routing and
+cache headers there are not covered by these tests.
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
