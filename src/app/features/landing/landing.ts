@@ -13,7 +13,7 @@ import { NEWS } from '../../shared/data/translations';
       <img
         ngSrc="/images/bear.png"
         width="873"
-        height="845"
+        height="582"
         alt="Tattered children's room teddy bear"
         class="news-photo"
         priority
